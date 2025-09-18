@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import { useEffect, useState } from "react";
+import { useLang } from "@/lib/hooks/useLang";
 
 const links = [
   { href: "/", label: "Home" },
@@ -15,17 +16,30 @@ const links = [
 
 export default function NavBar() {
   const pathname = usePathname();
-  const [lang, setLang] = useState<string>("en");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("lang");
-    if (saved) setLang(saved);
-  }, []);
+  const { lang, setLang, t } = useLang();
 
   const handleLangChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setLang(value);
-    localStorage.setItem("lang", value);
+  };
+
+  const labelForHref = (href: string) => {
+    switch (href) {
+      case "/":
+        return t("nav.home");
+      case "/report":
+        return t("nav.report");
+      case "/map":
+        return t("nav.map");
+      case "/dashboard/citizen":
+        return t("nav.citizen");
+      case "/dashboard/officer":
+        return t("nav.officer");
+      case "/dashboard/admin":
+        return t("nav.admin");
+      default:
+        return href;
+    }
   };
 
   return (
@@ -41,7 +55,7 @@ export default function NavBar() {
               href={l.href}
               className={`rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent ${pathname === l.href ? "bg-accent" : ""}`}
             >
-              {l.label}
+              {labelForHref(l.href)}
             </Link>
           ))}
         </nav>
@@ -55,8 +69,8 @@ export default function NavBar() {
             <option value="en">English</option>
             <option value="hi">हिन्दी</option>
           </select>
-          <Link href="/login" className="rounded-md border px-3 py-2 text-sm hover:bg-accent">Login</Link>
-          <Link href="/signup" className="rounded-md bg-primary px-3 py-2 text-sm text-primary-foreground hover:opacity-90">Sign Up</Link>
+          <Link href="/login" className="rounded-md border px-3 py-2 text-sm hover:bg-accent">{t("nav.login")}</Link>
+          <Link href="/signup" className="rounded-md bg-primary px-3 py-2 text-sm text-primary-foreground hover:opacity-90">{t("nav.signup")}</Link>
           <ThemeToggle />
         </div>
       </div>

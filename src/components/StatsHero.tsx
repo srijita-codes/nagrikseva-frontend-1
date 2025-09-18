@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
+import { useLang } from "@/lib/hooks/useLang";
 
 const data = [
   { name: "Mon", issues: 12 },
@@ -13,30 +14,31 @@ const data = [
 ];
 
 export default function StatsHero() {
+  const { t } = useLang();
   return (
     <section className="mx-auto max-w-7xl px-4 py-12">
       <div className="grid items-center gap-10 md:grid-cols-2">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Crowdsourced Civic Issue Reporting</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{t("hero.title")}</h1>
           <p className="mt-4 text-muted-foreground">
-            NagrikSeva empowers citizens to report civic issues, track resolutions, and collaborate with authorities.
+            {t("hero.sub")}
           </p>
           <div className="mt-6 flex gap-3">
-            <a href="/report" className="rounded-md bg-primary px-4 py-2 text-primary-foreground">Report an Issue</a>
-            <a href="/map" className="rounded-md border px-4 py-2">Explore Map</a>
+            <a href="/report" className="rounded-md bg-primary px-4 py-2 text-primary-foreground">{t("hero.cta.report")}</a>
+            <a href="/map" className="rounded-md border px-4 py-2">{t("hero.cta.map")}</a>
           </div>
           <div className="mt-8 grid grid-cols-3 gap-4">
             <div className="rounded-lg border p-4 text-center">
               <div className="text-2xl font-bold">1.2k+</div>
-              <div className="text-xs text-muted-foreground">Reports</div>
+              <div className="text-xs text-muted-foreground">{t("hero.stats.reports")}</div>
             </div>
             <div className="rounded-lg border p-4 text-center">
               <div className="text-2xl font-bold">78%</div>
-              <div className="text-xs text-muted-foreground">Resolved</div>
+              <div className="text-xs text-muted-foreground">{t("hero.stats.resolved")}</div>
             </div>
             <div className="rounded-lg border p-4 text-center">
               <div className="text-2xl font-bold">24h</div>
-              <div className="text-xs text-muted-foreground">Median Response</div>
+              <div className="text-xs text-muted-foreground">{t("hero.stats.median_response")}</div>
             </div>
           </div>
         </motion.div>
@@ -57,7 +59,7 @@ export default function StatsHero() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <p className="mt-2 text-center text-sm text-muted-foreground">Weekly issue reports</p>
+          <p className="mt-2 text-center text-sm text-muted-foreground">{t("hero.weekly_caption")}</p>
         </motion.div>
       </div>
     </section>
