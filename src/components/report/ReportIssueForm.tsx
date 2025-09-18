@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import IssueMapPicker from "../map/IssueMapPicker";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
 const schema = z.object({
   title: z.string().min(3, "Title too short"),
@@ -30,7 +31,10 @@ export default function ReportIssueForm() {
 
   const onSubmit = (values: IssueFormValues) => {
     // Mock submit
-    alert(`Issue submitted!\n${JSON.stringify(values, null, 2)}`);
+    toast.success("Issue submitted!", {
+      description: "Thanks for reporting. We'll keep you updated.",
+    });
+    console.log("Submitted issue:", values);
   };
 
   return (
